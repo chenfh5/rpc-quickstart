@@ -8,4 +8,4 @@
 
 ## QuickStart
 1. thrift-rpc
-2. http-rpc(Grizzly)
+2. grizzly-http

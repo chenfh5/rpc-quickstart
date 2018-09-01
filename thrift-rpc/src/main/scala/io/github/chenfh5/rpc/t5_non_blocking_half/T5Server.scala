@@ -8,8 +8,9 @@ import org.apache.thrift.transport.{TFramedTransport, TNonblockingServerSocket}
 
 class T5Server extends Server {
 
+  override val serverType: String = "半同步半异步服务模型"
+
   override def init(): Unit = {
-    // 半同步半异步服务模型
     val socket = new TNonblockingServerSocket(Configuration.SERVER_PORT_5, Configuration.TIMEOUT_MILLS)
 
     val tArgs = new THsHaServer.Args(socket)
@@ -17,16 +18,6 @@ class T5Server extends Server {
     tArgs.transportFactory(new TFramedTransport.Factory())
     tArgs.protocolFactory(new TCompactProtocol.Factory())
     server = new THsHaServer(tArgs)
-  }
-
-  override def start(): Unit = {
-    println("this is the 半同步半异步服务模型 starting...")
-    super.start()
-  }
-
-  override def stop(): Unit = {
-    println("this is the 半同步半异步服务模型 shutdown")
-    super.stop()
   }
 
 }

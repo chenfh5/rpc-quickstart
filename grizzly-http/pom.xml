@@ -9,22 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rpc-commom</artifactId>
+    <artifactId>grizzly-http</artifactId>
 
     <dependencies>
-        <!--Common jar-->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
-        <!--scala-->
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
+            <groupId>io.github.chenfh5</groupId>
+            <artifactId>rpc-commom</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <!--Testing Frameworks-->
         <dependency>
@@ -35,20 +26,16 @@
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_${scala.target.version}</artifactId>
         </dependency>
+        <!--grizzly http-->
+        <dependency>
+            <groupId>org.glassfish.grizzly</groupId>
+            <artifactId>grizzly-http-server</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
-            <!--Build plugin-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-            </plugin>
             <!--Compile plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

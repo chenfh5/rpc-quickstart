@@ -7,18 +7,18 @@ class HelloServiceImpl extends Hello.Iface {
   private val LOG = LoggerFactory.getLogger(getClass)
 
   override def helloString(param: String): String = {
-    LOG.info("this is the HelloServiceImpl helloString param={}", param)
+    LOG.debug("this is the HelloServiceImpl helloString param={}", param)
     param
   }
 
   override def helloInt(param: Int): Int = {
-    LOG.info("this is the HelloServiceImpl helloInt param={}", param)
+    LOG.debug("this is the HelloServiceImpl helloInt param={}", param)
     Thread.sleep(2000)
     param
   }
 
   override def helloBoolean(param: Boolean): Boolean = {
-    LOG.info("this is the HelloServiceImpl helloBoolean param={}", param)
+    LOG.debug("this is the HelloServiceImpl helloBoolean param={}", param)
     Thread.sleep(2000)
     param
   }
@@ -28,7 +28,7 @@ class HelloServiceImpl extends Hello.Iface {
   }
 
   override def sendMessage(message: Message): Response = {
-    LOG.info("this is the HelloServiceImpl sendMessage message={}", message)
+    LOG.debug("this is the HelloServiceImpl sendMessage message={}", message)
     val resp = new Response(0, message)
     resp
   }

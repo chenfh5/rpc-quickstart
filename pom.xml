@@ -11,6 +11,7 @@
     <modules>
         <module>thrift-rpc</module>
         <module>rpc-commom</module>
+        <module>grizzly-http</module>
     </modules>
 
     <properties>
@@ -53,6 +54,16 @@
                 <artifactId>scalatest_${scala.target.version}</artifactId>
                 <version>3.0.5</version>
                 <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.scala-lang</groupId>
+                        <artifactId>scala-library</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.scala-lang</groupId>
+                        <artifactId>scala-reflect</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!--thrift-->
             <dependency>
@@ -72,7 +83,43 @@
     <build>
         <pluginManagement>
             <plugins>
+                <!--Build plugin-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <configuration/>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <appendAssemblyId>false</appendAssemblyId>
+                        <descriptors>
+                            <descriptor>src${file.separator}assembly${file.separator}assembly.xml</descriptor>
+                        </descriptors>
+                        <attach>false</attach>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <!--Compile plugin-->
+                <!-- This plugin compiles Java files -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -81,26 +128,38 @@
                         <source>${java.source.version}</source>
                         <target>${java.target.version}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
-                        <compilerArguments>
-                            <extdirs>src${file.separator}main${file.separator}lib</extdirs>
-                        </compilerArguments>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
+                <!-- This plugin compiles Scala files -->
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
                     <version>3.3.2</version>
                     <executions>
                         <execution>
+                            <id>scala-compile-first</id>
+                            <phase>process-resources</phase>
                             <goals>
+                                <goal>add-source</goal>
                                 <goal>compile</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>scala-test-compile</id>
+                            <phase>process-test-resources</phase>
+                            <goals>
                                 <goal>testCompile</goal>
                             </goals>
                         </execution>
                     </executions>
-                    <configuration>
-                        <scalaVersion>${scala.version}</scalaVersion>
-                    </configuration>
                 </plugin>
                 <!--Test plugin-->
                 <plugin>
@@ -115,6 +174,5 @@
             </plugins>
         </pluginManagement>
     </build>
-
 
 </project>

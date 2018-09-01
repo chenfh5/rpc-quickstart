@@ -8,8 +8,9 @@ import org.apache.thrift.transport.TSSLTransportFactory.TSSLTransportParameters
 
 class T3Server extends Server {
 
+  override val serverType: String = "通讯层采用SSL安全认证模型"
+
   override def init(): Unit = {
-    // 通讯层采用SSL安全认证
     val tSSLTransportParameters = new TSSLTransportParameters()
     tSSLTransportParameters.setKeyStore("ssl/thrift_ssl_test.keystore", "thrift")
     val socket = TSSLTransportFactory.getServerSocket(Configuration.SERVER_PORT_3, Configuration.TIMEOUT_MILLS, null, tSSLTransportParameters)
@@ -17,17 +18,6 @@ class T3Server extends Server {
     val tArgs = new TThreadPoolServer.Args(socket) // 线程池参数设置
     tArgs.processor(ThriftConstant.processor) // protocol and transport are using default
     server = new TThreadPoolServer(tArgs)
-  }
-
-
-  override def start(): Unit = {
-    println("this is the 通讯层采用SSL安全认证 starting...")
-    super.start()
-  }
-
-  override def stop(): Unit = {
-    println("this is the 通讯层采用SSL安全认证 shutdown")
-    super.stop()
   }
 
 }

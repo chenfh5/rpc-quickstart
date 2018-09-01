@@ -6,12 +6,11 @@ import org.apache.thrift.async.{AsyncMethodCallback, TAsyncClientManager}
 import org.apache.thrift.protocol.TCompactProtocol
 import org.apache.thrift.transport.{TFramedTransport, TNonblockingSocket, TSocket}
 
-import scala.io.StdIn
-
 class T2Client {
 
   def process(str: String): Response = {
-    if (scala.util.Random.nextInt(10) % 2 == 0) sync(str) else async(str)
+    async(str)
+    //    if (scala.util.Random.nextInt(10) % 2 == 0) sync(str) else async(str)
   }
 
   def sync(str: String): Response = {
@@ -39,16 +38,16 @@ class T2Client {
     var resp: Response = null
     client.sendMessage(new Message(scala.util.Random.nextInt(10), data), new AsyncMethodCallback[Response] {
       override def onComplete(response: Response): Unit = {
-        println(s"this is the blocking_threadpool_sync async res=$response")
+        println(s"this is the t2_non_blocking_multiple_thread_async res=$response")
         resp = response
       }
 
       override def onError(exception: Exception): Unit = {
-        println(s"this is the t2_non_blocking_multiple_thread_async async error=$exception")
+        println(s"this is the t2_non_blocking_multiple_thread_async error=$exception")
       }
     })
     println("start sleep here to wait async")
-    StdIn.readLine()
+    //    StdIn.readLine() // comment here in case of UT
     Thread.sleep(2000)
     println("end sleep here")
     resp
