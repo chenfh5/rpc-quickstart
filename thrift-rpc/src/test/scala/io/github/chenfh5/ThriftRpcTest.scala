@@ -29,9 +29,9 @@ class ThriftRpcTest {
       case row if row % 2 == 0 =>
         println(s"thread id=${Thread.currentThread().getId}")
         server.init()
-        server.start()
+        server.start() // server persistent automatically
       case row if row % 2 == 1 =>
-        Thread.sleep(1000)
+        Thread.sleep(1000) // wait for server bootstrap
         println(s"thread id=${Thread.currentThread().getId}")
         val resp = T1Client("testClient1")
         Assert.assertTrue(resp.message.data.contains("testClient1"))
