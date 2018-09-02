@@ -1,7 +1,8 @@
 package io.github.chenfh5.rpc.t3_ssl_threadpool
 
+import io.github.chenfh5.OwnConfigReader.OwnConfig
+import io.github.chenfh5.OwnUtils
 import io.github.chenfh5.rpc.thrift.autogen.{Hello, Message, Response}
-import io.github.chenfh5.{Configuration, OwnUtils}
 import org.apache.thrift.protocol.TBinaryProtocol
 import org.apache.thrift.transport.TSSLTransportFactory
 import org.apache.thrift.transport.TSSLTransportFactory.TSSLTransportParameters
@@ -12,7 +13,7 @@ class T3Client {
     val tSSLTransportParameters = new TSSLTransportParameters()
     tSSLTransportParameters.setTrustStore("ssl/thrift_ssl_test.truststore", "thrift2")
 
-    val transport = TSSLTransportFactory.getClientSocket(Configuration.SERVER_HOST, Configuration.SERVER_PORT_3, Configuration.TIMEOUT_MILLS, tSSLTransportParameters)
+    val transport = TSSLTransportFactory.getClientSocket(OwnConfig.SERVER_HOST, OwnConfig.SERVER_PORT_3, OwnConfig.TIMEOUT_MILLS, tSSLTransportParameters)
     val protocol = new TBinaryProtocol(transport)
     val client = new Hello.Client(protocol)
 

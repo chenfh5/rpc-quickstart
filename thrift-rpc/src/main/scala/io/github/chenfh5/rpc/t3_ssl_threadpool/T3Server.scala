@@ -1,6 +1,6 @@
 package io.github.chenfh5.rpc.t3_ssl_threadpool
 
-import io.github.chenfh5.Configuration
+import io.github.chenfh5.OwnConfigReader.OwnConfig
 import io.github.chenfh5.rpc.{Server, ThriftConstant}
 import org.apache.thrift.server.TThreadPoolServer
 import org.apache.thrift.transport.TSSLTransportFactory
@@ -13,7 +13,7 @@ class T3Server extends Server {
   override def init(): Unit = {
     val tSSLTransportParameters = new TSSLTransportParameters()
     tSSLTransportParameters.setKeyStore("ssl/thrift_ssl_test.keystore", "thrift")
-    val socket = TSSLTransportFactory.getServerSocket(Configuration.SERVER_PORT_3, Configuration.TIMEOUT_MILLS, null, tSSLTransportParameters)
+    val socket = TSSLTransportFactory.getServerSocket(OwnConfig.SERVER_PORT_3, OwnConfig.TIMEOUT_MILLS, null, tSSLTransportParameters)
 
     val tArgs = new TThreadPoolServer.Args(socket) // 线程池参数设置
     tArgs.processor(ThriftConstant.processor) // protocol and transport are using default

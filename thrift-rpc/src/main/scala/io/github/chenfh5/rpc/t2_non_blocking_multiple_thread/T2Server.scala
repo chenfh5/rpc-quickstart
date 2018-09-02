@@ -1,6 +1,6 @@
 package io.github.chenfh5.rpc.t2_non_blocking_multiple_thread
 
-import io.github.chenfh5.Configuration
+import io.github.chenfh5.OwnConfigReader.OwnConfig
 import io.github.chenfh5.rpc.{Server, ThriftConstant}
 import org.apache.thrift.TProcessorFactory
 import org.apache.thrift.protocol.TCompactProtocol
@@ -12,7 +12,7 @@ class T2Server extends Server {
   override val serverType: String = "非堵塞式多线程服务模型"
 
   override def init(): Unit = {
-    val socket = new TNonblockingServerSocket(Configuration.SERVER_PORT_2, Configuration.TIMEOUT_MILLS) // 非堵塞式
+    val socket = new TNonblockingServerSocket(OwnConfig.SERVER_PORT_2, OwnConfig.TIMEOUT_MILLS) // 非堵塞式
 
     val tArgs = new TThreadedSelectorServer.Args(socket) // 多线程参数设置
     tArgs.protocolFactory(new TCompactProtocol.Factory()) // 传输协议（二进制，压缩，json，debug,. etc），定义了消息是怎样序列化的

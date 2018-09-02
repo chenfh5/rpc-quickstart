@@ -1,14 +1,15 @@
 package io.github.chenfh5.rpc.t1_blocking_threadpool
 
+import io.github.chenfh5.OwnConfigReader.OwnConfig
+import io.github.chenfh5.OwnUtils
 import io.github.chenfh5.rpc.thrift.autogen.{Hello, Message, Response}
-import io.github.chenfh5.{Configuration, OwnUtils}
 import org.apache.thrift.protocol.TBinaryProtocol
 import org.apache.thrift.transport.TSocket
 
 class T1Client {
 
   def process(str: String): Response = {
-    val transport = new TSocket(Configuration.SERVER_HOST, Configuration.SERVER_PORT_1, Configuration.TIMEOUT_MILLS)
+    val transport = new TSocket(OwnConfig.SERVER_HOST, OwnConfig.SERVER_PORT_1, OwnConfig.TIMEOUT_MILLS)
     transport.open()
 
     val protocol = new TBinaryProtocol(transport) // default is binary protocol

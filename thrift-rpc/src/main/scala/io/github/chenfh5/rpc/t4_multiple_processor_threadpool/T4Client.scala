@@ -1,14 +1,15 @@
 package io.github.chenfh5.rpc.t4_multiple_processor_threadpool
 
+import io.github.chenfh5.OwnConfigReader.OwnConfig
+import io.github.chenfh5.OwnUtils
 import io.github.chenfh5.rpc.thrift.autogen.{Hello, Message, Response}
-import io.github.chenfh5.{Configuration, OwnUtils}
 import org.apache.thrift.protocol.{TBinaryProtocol, TMultiplexedProtocol}
 import org.apache.thrift.transport.TSocket
 
 class T4Client {
 
   def process(str: String): Response = {
-    val transport = new TSocket(Configuration.SERVER_HOST, Configuration.SERVER_PORT_4, Configuration.TIMEOUT_MILLS)
+    val transport = new TSocket(OwnConfig.SERVER_HOST, OwnConfig.SERVER_PORT_4, OwnConfig.TIMEOUT_MILLS)
     transport.open()
 
     val multiplexedProtocol = new TMultiplexedProtocol(new TBinaryProtocol(transport), "helloService")

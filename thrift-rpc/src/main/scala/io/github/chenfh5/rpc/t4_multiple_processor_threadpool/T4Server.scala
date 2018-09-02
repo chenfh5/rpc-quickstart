@@ -1,6 +1,6 @@
 package io.github.chenfh5.rpc.t4_multiple_processor_threadpool
 
-import io.github.chenfh5.Configuration
+import io.github.chenfh5.OwnConfigReader.OwnConfig
 import io.github.chenfh5.rpc.{Server, ThriftConstant}
 import org.apache.thrift.TMultiplexedProcessor
 import org.apache.thrift.server.TThreadPoolServer
@@ -11,7 +11,7 @@ class T4Server extends Server {
   override val serverType: String = "多处理器服务模型模型"
 
   override def init(): Unit = {
-    val socket = new TServerSocket(Configuration.SERVER_PORT_4, Configuration.TIMEOUT_MILLS)
+    val socket = new TServerSocket(OwnConfig.SERVER_PORT_4, OwnConfig.TIMEOUT_MILLS)
 
     val tArgs = new TThreadPoolServer.Args(socket)
     val processor = new TMultiplexedProcessor()

@@ -1,7 +1,8 @@
 package io.github.chenfh5.rpc.t2_non_blocking_multiple_thread
 
+import io.github.chenfh5.OwnConfigReader.OwnConfig
+import io.github.chenfh5.OwnUtils
 import io.github.chenfh5.rpc.thrift.autogen.{Hello, Message, Response}
-import io.github.chenfh5.{Configuration, OwnUtils}
 import org.apache.thrift.async.{AsyncMethodCallback, TAsyncClientManager}
 import org.apache.thrift.protocol.TCompactProtocol
 import org.apache.thrift.transport.{TFramedTransport, TNonblockingSocket, TSocket}
@@ -14,7 +15,7 @@ class T2Client {
   }
 
   def sync(str: String): Response = {
-    val transport = new TFramedTransport(new TSocket(Configuration.SERVER_HOST, Configuration.SERVER_PORT_2, Configuration.TIMEOUT_MILLS))
+    val transport = new TFramedTransport(new TSocket(OwnConfig.SERVER_HOST, OwnConfig.SERVER_PORT_2, OwnConfig.TIMEOUT_MILLS))
     transport.open()
 
     val protocol = new TCompactProtocol(transport)
@@ -29,7 +30,7 @@ class T2Client {
 
   def async(str: String): Response = {
     val asyncClientManager = new TAsyncClientManager()
-    val transport = new TNonblockingSocket(Configuration.SERVER_HOST, Configuration.SERVER_PORT_2, Configuration.TIMEOUT_MILLS)
+    val transport = new TNonblockingSocket(OwnConfig.SERVER_HOST, OwnConfig.SERVER_PORT_2, OwnConfig.TIMEOUT_MILLS)
 
     val protocolFactory = new TCompactProtocol.Factory()
     val client = new Hello.AsyncClient(protocolFactory, asyncClientManager, transport)

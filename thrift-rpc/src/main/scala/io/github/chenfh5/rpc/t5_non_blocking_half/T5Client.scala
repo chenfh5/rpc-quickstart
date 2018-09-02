@@ -1,14 +1,15 @@
 package io.github.chenfh5.rpc.t5_non_blocking_half
 
+import io.github.chenfh5.OwnConfigReader.OwnConfig
+import io.github.chenfh5.OwnUtils
 import io.github.chenfh5.rpc.thrift.autogen.{Hello, Message, Response}
-import io.github.chenfh5.{Configuration, OwnUtils}
 import org.apache.thrift.protocol.TCompactProtocol
 import org.apache.thrift.transport.{TFramedTransport, TSocket}
 
 class T5Client {
 
   def process(str: String): Response = {
-    val transport = new TFramedTransport(new TSocket(Configuration.SERVER_HOST, Configuration.SERVER_PORT_5, Configuration.TIMEOUT_MILLS))
+    val transport = new TFramedTransport(new TSocket(OwnConfig.SERVER_HOST, OwnConfig.SERVER_PORT_5, OwnConfig.TIMEOUT_MILLS))
     transport.open()
 
     val protocol = new TCompactProtocol(transport)
