@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 import org.testng.Assert
 import org.testng.annotations.{AfterClass, BeforeClass, Test}
 
-class FuncTest {
+class ThriftRpcTest {
   private val LOG = LoggerFactory.getLogger(getClass)
 
   @BeforeClass
@@ -25,7 +25,7 @@ class FuncTest {
   @Test(enabled = true, priority = 1)
   def testServer1(): Unit = {
     val server = T1Server()
-    (0 to 1).toList.par.foreach { // should use the testng parallel
+    (0 to 1).toList.par.foreach { // TODO: should use the testng parallel
       case row if row % 2 == 0 =>
         println(s"thread id=${Thread.currentThread().getId}")
         server.init()

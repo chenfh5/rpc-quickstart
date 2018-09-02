@@ -31,6 +31,17 @@
             <groupId>org.glassfish.grizzly</groupId>
             <artifactId>grizzly-http-server</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.json4s</groupId>
+            <artifactId>json4s-jackson_${scala.source.version}</artifactId>
+        </dependency>
+        <!--for client call only, It could Raw Java HttpURLConnection-->
+        <!--https://stackoverflow.com/questions/11719373/doing-http-request-in-scala-->
+        <dependency>
+            <groupId>org.scalaj</groupId>
+            <artifactId>scalaj-http_${scala.source.version}</artifactId>
+            <version>2.4.1</version>
+        </dependency>
     </dependencies>
 
     <build>

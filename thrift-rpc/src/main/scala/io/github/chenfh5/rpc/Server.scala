@@ -18,8 +18,9 @@ trait Server {
   }
 
   def stop(): Unit = {
+    LOG.info("this is the {} stopping...", serverType)
+    if (server != null) server.stop()
     LOG.info("this is the {} shutdown!!!", serverType)
-    server.stop()
   }
 
 }
