@@ -11,10 +11,9 @@ trait Server {
 
   def init()
 
-  // block here until server.stop() call
   def start(): Unit = {
     LOG.info("this is the {} starting...", serverType)
-    server.serve()
+    server.serve() // block here until server.stop() call
   }
 
   def stop(): Unit = {

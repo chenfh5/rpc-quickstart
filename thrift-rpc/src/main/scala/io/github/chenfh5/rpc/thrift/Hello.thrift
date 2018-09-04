@@ -11,9 +11,9 @@ struct Response {
 }
 
 service Hello {
-    string helloString(1:string param)
-    i32 helloInt(1:i32 param)
-    bool helloBoolean(1:bool param)
+    string helloString(1: string param)
+    i32 helloInt(1: i32 param)
+    bool helloBoolean(1: bool param)
     void helloVoid()
-    Response sendMessage(1:Message message)
+    Response sendMessage(1: Message message)
 }

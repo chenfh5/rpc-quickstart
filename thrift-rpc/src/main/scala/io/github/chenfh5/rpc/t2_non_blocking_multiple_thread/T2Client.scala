@@ -5,7 +5,7 @@ import io.github.chenfh5.OwnUtils
 import io.github.chenfh5.rpc.thrift.autogen.{Hello, Message, Response}
 import org.apache.thrift.async.{AsyncMethodCallback, TAsyncClientManager}
 import org.apache.thrift.protocol.TCompactProtocol
-import org.apache.thrift.transport.{TFramedTransport, TNonblockingSocket, TSocket}
+import org.apache.thrift.transport.{TFramedTransport, TNonblockingSocket, TSocket, TTransport}
 
 class T2Client {
 
@@ -25,6 +25,7 @@ class T2Client {
     val data = s"hello world chenfh5 strRaw=$str strRandom=$strRandom, now=${OwnUtils.getTimeNow()}"
     val resp = client.sendMessage(new Message(scala.util.Random.nextInt(10), data)) // client send message to the server, and the server receive it(message from client) and return response after deal with the it
     println(s"this is the t2_non_blocking_multiple_thread_sync resp code=${resp.code}, resp msg=${resp.message}")
+    cleanup(transport)
     resp
   }
 
@@ -41,10 +42,14 @@ class T2Client {
       override def onComplete(response: Response): Unit = {
         println(s"this is the t2_non_blocking_multiple_thread_async res=$response")
         resp = response
+        cleanup(transport)
+        asyncClientManager.stop()
       }
 
       override def onError(exception: Exception): Unit = {
         println(s"this is the t2_non_blocking_multiple_thread_async error=$exception")
+        cleanup(transport)
+        asyncClientManager.stop()
       }
     })
     println("start sleep here to wait async")
@@ -53,6 +58,8 @@ class T2Client {
     println("end sleep here")
     resp
   }
+
+  def cleanup(transport: TTransport): Unit = transport.close()
 
 }
 
